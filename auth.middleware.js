@@ -1,4 +1,4 @@
-
+const jwt = require("jsonwebtoken")
 
 function authorizationMiddleware(req,res,next) {
 
@@ -10,7 +10,9 @@ function authorizationMiddleware(req,res,next) {
             message: "Token must be provided"
         })
     }
-
+    const result = jwt.verify(token, process.env.SECRET_KEY)
+    req.user = {id:result.id, username:result.username}
+    
     next()
 
 
